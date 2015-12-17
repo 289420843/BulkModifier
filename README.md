@@ -1,2 +1,5 @@
-# BulkModifier
+﻿# BulkModifier
 批量修改器
+# 说明
+1.支持正则表达式检索
+2.批量替换自定义脚本
