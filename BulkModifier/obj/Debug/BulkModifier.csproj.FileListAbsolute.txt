@@ -10,3 +10,15 @@ E:\测试项目\BulkModifier\BulkModifier\obj\Debug\BulkModifier.Properties.Reso
 E:\测试项目\BulkModifier\BulkModifier\obj\Debug\BulkModifier.csproj.GenerateResource.Cache
 E:\测试项目\BulkModifier\BulkModifier\obj\Debug\BulkModifier.exe
 E:\测试项目\BulkModifier\BulkModifier\obj\Debug\BulkModifier.pdb
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.exe
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.pdb
+E:\Git\BulkModifier\BulkModifier\bin\Debug\BulkModifier.exe
+E:\Git\BulkModifier\BulkModifier\bin\Debug\BulkModifier.pdb
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.csprojResolveAssemblyReference.cache
+E:\Git\BulkModifier\BulkModifier\obj\Debug\MainWindow.baml
+E:\Git\BulkModifier\BulkModifier\obj\Debug\MainWindow.g.cs
+E:\Git\BulkModifier\BulkModifier\obj\Debug\App.g.cs
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier_MarkupCompile.cache
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.g.resources
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.Properties.Resources.resources
+E:\Git\BulkModifier\BulkModifier\obj\Debug\BulkModifier.csproj.GenerateResource.Cache
