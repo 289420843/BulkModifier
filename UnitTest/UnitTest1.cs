@@ -23,7 +23,7 @@ namespace UnitTest
                 directory = rootDirectory,
                 filterExtensions = fileExtension,
                 matchingKey = searchContent,
-                sameLevel = true
+                sameLevel = true  
             });
         }
     }
