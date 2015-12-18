@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core
 {
-    public class Class1
+    class FileHelper
     {
     }
 }
