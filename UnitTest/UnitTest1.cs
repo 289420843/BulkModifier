@@ -13,7 +13,7 @@ namespace UnitTest
         public void TestMethod1()
         {
             //文件根目录
-            string rootDirectory = @"E:\Git\BulkModifier\UnitTest";
+            string rootDirectory = @"E:\Git\BulkModifier\UnitTest\testTxt";
             //处理文件的类型
             string fileExtension = ".txt,";
             //替换的目标
@@ -24,17 +24,38 @@ namespace UnitTest
                 directory = rootDirectory,
                 filterExtensions = fileExtension,
                 matchingKey = searchContent,
-                sameLevel = true
+                sameLevel = false
             });
         }
-        
+
         /// <summary>
         /// 处理匹配成功字符串
         /// </summary>
         /// <param name="value"></param>
-        public void onMatchingSucceed(string value)
+        public string onMatchingSucceed(string value)
         {
-            string aa = value;
+            MatchCollection mc;
+            //提取保留的内容
+            var extract = "";
+            var type = "";
+            Regex reg = new Regex(@"(?<=\.)\w+");
+            if (reg.IsMatch(value))
+            {
+                mc = reg.Matches(value);
+                extract = mc[1].Value;
+                type = mc[0].Value;
+            }
+            string result = "";
+            switch (type)
+            {
+                case "id":
+                    result = "my.getId(\"" + extract + "\")";
+                    break;
+                case "string":
+                    result = "my.string(\"" + extract + "\")";
+                    break;
+            }
+            return result;
         }
     }
 }

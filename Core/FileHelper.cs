@@ -71,11 +71,13 @@ namespace Core
         }
         public static void matchingContent(string filePath, string matchingKey)
         {
+            bool replaced = false;
             MatchCollection mc;
             string mcStr;
             FileStream readFile = new FileStream(filePath, FileMode.Open);
             StreamReader re = new StreamReader(readFile);
             string lineStr = "";
+            List<string> lineStrs = new List<string>();
             while ((lineStr = re.ReadLine()) != null)
             {
                 Regex reg = new Regex(matchingKey);
@@ -85,15 +87,34 @@ namespace Core
                     for (var i = 0; i < mc.Count; i++)
                     {
                         mcStr = mc[i].Value;
-                        //OnProcess();
                         if (FileHelper.onMatchingSucceedDelegate != null)
                         {
-                            onMatchingSucceedDelegate(mcStr);
+                            string replaceStr = onMatchingSucceedDelegate(mcStr);
+                            if (replaceStr != mcStr)
+                            {
+                                replaced = true;
+                                lineStr = lineStr.Replace(mcStr, replaceStr);
+                            }
                         }
                         Console.WriteLine(mcStr);
                     }
                 }
+                lineStrs.Add(lineStr);
             }
+
+            //替换后的内容写回文件
+            if (replaced)
+            {
+                StreamWriter sw = new StreamWriter(readFile);
+                readFile.SetLength(0);
+                foreach (string line in lineStrs)
+                {
+                    sw.WriteLine(line);
+                }
+                sw.Close();
+            }
+            re.Close();
+            readFile.Close();
         }
         public static event MatchingSucceedDelegate onMatchingSucceedDelegate;
         public static void batchReplacement(ReplacementOption options)
@@ -114,7 +135,7 @@ namespace Core
     /// </summary>
     /// <param name="s1"></param>
     /// <param name="s2"></param>
-    /// <returns></returns>
-    public delegate void MatchingSucceedDelegate(string value);
+    /// <returns>返回处理结果</returns>
+    public delegate string MatchingSucceedDelegate(string value);
 
 }
