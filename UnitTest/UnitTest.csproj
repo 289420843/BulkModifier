@@ -62,6 +62,14 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="testTxtback\text\新建文件夹\3123.txt" />
+    <Content Include="testTxtback\text\新建文本文档.txt" />
+    <Content Include="testTxtback\新建文本文档.txt" />
+    <Content Include="testTxt\text\新建文件夹\3123.txt" />
+    <Content Include="testTxt\text\新建文本文档.txt" />
+    <Content Include="testTxt\新建文本文档.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

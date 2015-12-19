@@ -1,0 +1,12 @@
+
+gaw; Rd.fa;  R.dae  dad.Rfa.fw  my.string("fwef")  df.test("fewfwf");
+ghhh
+var gaweg  = my.getId("sef");
+ct(my.string("ffa"),android.R.string.aa);
+f 	faw.my.getId("aa"),   my.getId("bb") ,;
+
+gaw; Rd.fa;  R.dae  dad.Rfa.fw  my.string("fwef")  df.test("fewfwf");
+ghhh
+var gaweg  = my.getId("sef");
+ct(my.string("ffa"),android.R.string.aa);
+f 	faw.my.getId("aa"),   my.getId("bb") ,;
