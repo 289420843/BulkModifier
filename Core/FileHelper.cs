@@ -85,11 +85,17 @@ namespace Core
                     for (var i = 0; i < mc.Count; i++)
                     {
                         mcStr = mc[i].Value;
+                        //OnProcess();
+                        if (FileHelper.onMatchingSucceedDelegate != null)
+                        {
+                            onMatchingSucceedDelegate(mcStr);
+                        }
                         Console.WriteLine(mcStr);
                     }
                 }
             }
         }
+        public static event MatchingSucceedDelegate onMatchingSucceedDelegate;
         public static void batchReplacement(ReplacementOption options)
         {
             //过滤需要匹配的文件
@@ -100,5 +106,15 @@ namespace Core
                 matchingContent(f.filePath, options.matchingKey);
             }
         }
+
     }
+
+    /// <summary>
+    /// 委托 匹配成功时
+    /// </summary>
+    /// <param name="s1"></param>
+    /// <param name="s2"></param>
+    /// <returns></returns>
+    public delegate void MatchingSucceedDelegate(string value);
+
 }

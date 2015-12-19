@@ -18,13 +18,23 @@ namespace UnitTest
             string fileExtension = ".txt,";
             //替换的目标
             string searchContent = @"(?<!android\.)R\.\w+\.\w+(?=[ ,;))])";
+            FileHelper.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed);
             FileHelper.batchReplacement(new ReplacementOption()
             {
                 directory = rootDirectory,
                 filterExtensions = fileExtension,
                 matchingKey = searchContent,
-                sameLevel = true  
+                sameLevel = true
             });
+        }
+        
+        /// <summary>
+        /// 处理匹配成功字符串
+        /// </summary>
+        /// <param name="value"></param>
+        public void onMatchingSucceed(string value)
+        {
+            string aa = value;
         }
     }
 }
