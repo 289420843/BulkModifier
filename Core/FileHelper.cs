@@ -54,7 +54,7 @@ namespace Core
                 if (sameLevel)
                     continue;
                 string subDirectory = directory + "//" + NextFolder.Name;
-                result.AddRange(filterFile(subDirectory, filterExtensions));
+                result.AddRange(filterFile(subDirectory, filterExtensions, sameLevel));
             }
             foreach (FileInfo NextFile in TheFolder.GetFiles())
             {
