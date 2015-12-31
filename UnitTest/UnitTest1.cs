@@ -16,70 +16,21 @@ namespace UnitTest
         public void replaceR()
         {
             //文件根目录
-            string rootDirectory = @"E:\库\APICloud\yuntongxunModule\ECKitSdk";
+            string rootDirectory = @"E:\库\APICloud\yuntongxunModule";
             //处理文件的类型
             string fileExtension = ".java,";
             //替换的目标
             string searchContent = @"(?<!android\.)R\.\w+\.\w+(?=[ ,;))])";
-            FileHelper.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed);
-            FileHelper.batchReplacement(new ReplacementOption()
+            FileHelper fh1 = new FileHelper();
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed);
+            fh1.batchReplacement(new ReplacementOption()
             {
                 directory = rootDirectory,
                 filterExtensions = fileExtension,
                 matchingKey = searchContent,
                 sameLevel = false
             });
-
         }
-
-        /// <summary>
-        /// 替换R.xxx
-        /// </summary>
-        [TestMethod]
-        public void replaceReference()
-        {
-            //文件根目录
-            string rootDirectory = @"E:\库\APICloud\yuntongxunModule\ECKitSdk";
-            //处理文件的类型
-            string fileExtension = ".java,";
-            //替换的目标
-            string searchContent = @"import com.yuntongxun.eckitsdk.R;";
-            FileHelper.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replaceReference);
-            FileHelper.batchReplacement(new ReplacementOption()
-            {
-                directory = rootDirectory,
-                filterExtensions = fileExtension,
-                matchingKey = searchContent,
-                sameLevel = false
-            });
-
-        }
-        public string onMatchingSucceed_replaceReference(string value)
-        {
-            return "import com.uzmap.pkg.uzcore.UZResourcesIDFinder;";
-        }
-        ///// <summary>
-        ///// 替换 xml文件中的 @drawable/ a @color/ 等等
-        ///// </summary>
-        //[TestMethod]
-        //public void replaceXmlAit()
-        //{
-        //    //文件根目录
-        //    string rootDirectory = @"E:\库\APICloud\yuntongxunModule\ECKitImDemo";
-        //    //处理文件的类型
-        //    string fileExtension = ".xml,";
-        //    //替换的目标
-        //    string searchContent = @"(?<!android\.)R\.\w+\.\w+(?=[ ,;))])";
-        //    FileHelper.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed);
-        //    FileHelper.batchReplacement(new ReplacementOption()
-        //    {
-        //        directory = rootDirectory,
-        //        filterExtensions = fileExtension,
-        //        matchingKey = searchContent,
-        //        sameLevel = false
-        //    });
-        //}
-
         /// <summary>
         /// 处理匹配成功字符串
         /// </summary>
@@ -101,40 +52,128 @@ namespace UnitTest
             switch (type)
             {
                 case "id":
-                    result = @"UZResourcesIDFinder.getResIdID(""" + extract + @""")";
+                    result = @"FindResourceHelper.getResIdID(""" + extract + @""")";
                     break;
                 case "string":
-                    result = @"UZResourcesIDFinder.getResStringID(""mo_rlyuntongxun_string_" + extract + @""")";
+                    result = @"FindResourceHelper.getResStringID(""mo_rlyuntongxun_string_" + extract + @""")";
                     break;
                 case "dimen":
-                    result = @"UZResourcesIDFinder.getResDimenID(""mo_rlyuntongxun_dimen_" + extract + @""")";
+                    result = @"FindResourceHelper.getResDimenID(""mo_rlyuntongxun_dimen_" + extract + @""")";
                     break;
                 case "color":
-                    result = @"UZResourcesIDFinder.getResColorID(""mo_rlyuntongxun_color_" + extract + @""")";
+                    result = @"FindResourceHelper.getResColorID(""mo_rlyuntongxun_color_" + extract + @""")";
                     break;
                 case "drawable":
-                    result = @"UZResourcesIDFinder.getResDrawableID(""mo_rlyuntongxun_drawable_" + extract + @""")";
+                    result = @"FindResourceHelper.getResDrawableID(""mo_rlyuntongxun_drawable_" + extract + @""")";
                     break;
                 case "layout":
-                    result = @"UZResourcesIDFinder.getResLayoutID(""mo_rlyuntongxun_layout_" + extract + @""")";
+                    result = @"FindResourceHelper.getResLayoutID(""mo_rlyuntongxun_layout_" + extract + @""")";
                     break;
                 case "anim":
-                    result = @"UZResourcesIDFinder.getResAnimID(""mo_rlyuntongxun_anim_" + extract + @""")";
+                    result = @"FindResourceHelper.getResAnimID(""mo_rlyuntongxun_anim_" + extract + @""")";
                     break;
                 case "array":
-                    result = @"UZResourcesIDFinder.getResArrayID(""mo_rlyuntongxun_array_" + extract + @""")";
+                    result = @"FindResourceHelper.getResArrayID(""mo_rlyuntongxun_array_" + extract + @""")";
                     break;
                 case "styleable":
-                    result = @"UZResourcesIDFinder.getResStyleableID(""mo_rlyuntongxun_styleable_" + extract + @""")";
+                    result = @"FindResourceHelper.getResStyleableID(""mo_rlyuntongxun_styleable_" + extract + @""")";
                     break;
                 case "style":
-                    result = @"UZResourcesIDFinder.getResStyleID(""mo_rlyuntongxun_style_" + extract + @""")";
+                    result = @"FindResourceHelper.getResStyleID(""mo_rlyuntongxun_style_" + extract + @""")";
                     break;
                 case "xml":
-                    result = @"UZResourcesIDFinder.getResXmlID(""mo_rlyuntongxun_xml_" + extract + @""")";
+                    result = @"FindResourceHelper.getResXmlID(""mo_rlyuntongxun_xml_" + extract + @""")";
                     break;
             }
             return result;
+        }
+        /// <summary>
+        /// 替换引用R 为资源引用包
+        /// </summary>
+        [TestMethod]
+        public void replaceReference()
+        {
+            //文件根目录
+            string rootDirectory = @"E:\库\APICloud\yuntongxunModule";
+            //处理文件的类型
+            string fileExtension = ".java,";
+            //替换的目标
+            string searchContent = @"import com.yuntongxun.eckitsdk.R;";
+            FileHelper fh1 = new FileHelper();
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replaceReference);
+            fh1.batchReplacement(new ReplacementOption()
+            {
+                directory = rootDirectory,
+                filterExtensions = fileExtension,
+                matchingKey = searchContent,
+                sameLevel = false
+            });
+        }
+        public string onMatchingSucceed_replaceReference(string value)
+        {
+            return "import com.shenglin.global.helper.FindResourceHelper;";
+        }
+
+        /// <summary>
+        /// 替换引用资源
+        /// </summary>
+        [TestMethod]
+        public void replaceReferenceResource()
+        {
+            //文件根目录
+            string rootDirectory = @"E:\库\APICloud\yuntongxunModule\";
+            //处理文件的类型
+            string fileExtension = ".xml,";
+            //替换的目标
+            string searchContent = @"(?<=["">])@\w+/(?!mo_rlyuntongxun_)\w+";
+            FileHelper fh1 = new FileHelper();
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replaceReferenceResource);
+            fh1.batchReplacement(new ReplacementOption()
+            {
+                directory = rootDirectory,
+                filterExtensions = fileExtension,
+                matchingKey = searchContent,
+                sameLevel = false
+            });
+            int count = types.Count;
+        }
+
+        public List<string> types = new List<string>();
+        public string onMatchingSucceed_replaceReferenceResource(string value)
+        {
+            //提取保留的内容
+            var extract = value.Substring(value.IndexOf("/") + 1);
+            var type = value.Substring(1, value.IndexOf("/") - 1);
+            string result = string.Format(@"@{0}/mo_rlyuntongxun_{1}_{2}", type, type, extract);
+            if (!types.Contains(type))
+            {
+                types.Add(type);
+            }
+
+            return result;
+        }
+        /// <summary>
+        /// 替换xml 资源
+        /// </summary>
+        [TestMethod]
+        public void replacexmlresources()
+        {
+            //文件根目录
+            string rootDirectory = @"E:\库\APICloud\yuntongxunModule\";
+            //处理文件的类型
+            string fileExtension = ".xml,";
+            //替换的目标
+            string searchContent = @"<string name=""";
+            FileHelper fh1 = new FileHelper();
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replaceReferenceResource);
+            fh1.batchReplacement(new ReplacementOption()
+            {
+                directory = rootDirectory,
+                filterExtensions = fileExtension,
+                matchingKey = searchContent,
+                sameLevel = false
+            });
+            int count = types.Count;
         }
     }
 }

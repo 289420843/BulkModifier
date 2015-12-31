@@ -45,7 +45,7 @@ namespace Core
         /// 过滤文件
         /// </summary>
         /// <returns></returns>
-        public static IList<File> filterFile(string directory, string filterExtensions, bool sameLevel = true)
+        public IList<File> filterFile(string directory, string filterExtensions, bool sameLevel = true)
         {
             List<File> result = new List<File>();
             DirectoryInfo TheFolder = new DirectoryInfo(directory);
@@ -69,7 +69,7 @@ namespace Core
             }
             return result;
         }
-        public static void matchingContent(string filePath, string matchingKey)
+        public void matchingContent(string filePath, string matchingKey)
         {
             bool replaced = false;
             MatchCollection mc;
@@ -87,10 +87,10 @@ namespace Core
                     for (var i = 0; i < mc.Count; i++)
                     {
                         mcStr = mc[i].Value;
-                        if (FileHelper.onMatchingSucceedDelegate != null)
+                        if (onMatchingSucceedDelegate != null)
                         {
                             string replaceStr = onMatchingSucceedDelegate(mcStr);
-                            if (replaceStr != mcStr)
+                            if (replaceStr != null && replaceStr != mcStr)
                             {
                                 replaced = true;
                                 lineStr = lineStr.Replace(mcStr, replaceStr);
@@ -116,8 +116,8 @@ namespace Core
             re.Close();
             readFile.Close();
         }
-        public static event MatchingSucceedDelegate onMatchingSucceedDelegate;
-        public static void batchReplacement(ReplacementOption options)
+        public event MatchingSucceedDelegate onMatchingSucceedDelegate;
+        public void batchReplacement(ReplacementOption options)
         {
             //过滤需要匹配的文件
             IList<File> files = filterFile(options.directory, options.filterExtensions, options.sameLevel);
