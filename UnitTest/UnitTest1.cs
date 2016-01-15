@@ -84,6 +84,9 @@ namespace UnitTest
                 case "xml":
                     result = @"FindResourceHelper.getResXmlID(""mo_rlyuntongxun_xml_" + extract + @""")";
                     break;
+                case "plurals":
+                    result = @"FindResourceHelper.getResPluralsID(""mo_rlyuntongxun_xml_" + extract + @""")";
+                    break;
             }
             return result;
         }
@@ -163,9 +166,9 @@ namespace UnitTest
             //处理文件的类型
             string fileExtension = ".xml,";
             //替换的目标
-            string searchContent = @"<string name=""";
+            string searchContent = @"<\S+ name=""(?!mo_rlyuntongxun_)";
             FileHelper fh1 = new FileHelper();
-            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replaceReferenceResource);
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replacexmlresources);
             fh1.batchReplacement(new ReplacementOption()
             {
                 directory = rootDirectory,
@@ -173,7 +176,63 @@ namespace UnitTest
                 matchingKey = searchContent,
                 sameLevel = false
             });
-            int count = types.Count;
+        }
+
+        List<string> labelNames = new List<string>() { "string", "dimen", "color", "string-array", "declare-styleable", "style", "plurals" };
+        public string onMatchingSucceed_replacexmlresources(string value)
+        {
+            string result = null;
+            //提取保留的内容
+            var extract = value.Substring(value.IndexOf(" ") + 1);
+            var type = value.Substring(1, value.IndexOf(" ") - 1);
+            if (labelNames.Contains(type))
+            {
+                result = string.Format(@"<{0} name=""mo_rlyuntongxun_{1}_", type, type);
+                if (!types.Contains(type))
+                {
+                    types.Add(type);
+                }
+
+            }
+            return result;
+        }
+
+
+
+        /// <summary>
+        /// 替换xml 资源
+        /// </summary>
+        [TestMethod]
+        public void replacelayoutclass()
+        {
+            //文件根目录
+            string rootDirectory = @"E:\Code\AndroidStudio\rlytxim\app\src\main\res\layout";
+            //处理文件的类型
+            string fileExtension = ".xml,";
+            //替换的目标
+            string searchContent = @"(<\.)|(</\.)";
+            FileHelper fh1 = new FileHelper();
+            fh1.onMatchingSucceedDelegate += new MatchingSucceedDelegate(onMatchingSucceed_replacelayoutclass);
+            fh1.batchReplacement(new ReplacementOption()
+            {
+                directory = rootDirectory,
+                filterExtensions = fileExtension,
+                matchingKey = searchContent,
+                sameLevel = false
+            });
+        }
+        public string onMatchingSucceed_replacelayoutclass(string value)
+        {
+            string result = null;
+            if (value.Length == 2)
+            {
+                result = "<com.cloudhealth.shenglin.rlytxim.";
+            }
+            else
+            {
+                result = "</com.cloudhealth.shenglin.rlytxim.";
+            }
+            return result;
         }
     }
 }
